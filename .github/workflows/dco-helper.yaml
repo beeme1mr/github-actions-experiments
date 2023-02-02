@@ -1,0 +1,21 @@
+on:
+  status
+
+jobs:
+  if_error_or_failure:
+    runs-on: ubuntu-latest
+    # Should throw a failure
+    if: >-
+      github.event.state == 'error' ||
+      github.event.state == 'failure'
+    steps:
+      - env:
+          DESCRIPTION: ${{ github.event.description }}
+          INSTALLATION: ${{ github.event.installation }}
+          NAME: ${{ github.event.name }}
+        run: |
+          echo The status is error or failed: $DESCRIPTION
+        run: |
+          echo The status is error or failed: $INSTALLATION
+        run: |
+          echo The status is error or failed: $NAME
