@@ -18,6 +18,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: dco-required
+        number: ${{ github.event.check_run.check_suite.pull_requests[0].number }}
         message: |
           Hey there and thank you for opening this pull request! 👋🏼
 
