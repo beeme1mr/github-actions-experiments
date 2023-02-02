@@ -25,3 +25,10 @@ jobs:
           This project enforces the [Developer Certificate of Origin](https://developercertificate.org/) (DCO) on Pull Requests. That means all commit messages must contain the `Signed-off-by` line with an email address that matches the commit author.
 
           ${{ github.event.check_run.output.summary }}
+
+    # Delete a previous comment when the issue has been resolved
+    - if: github.event.check_run.name == 'DCO' && github.event.check_run.conclusion != 'action_required'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:   
+        header: dco-required
+        delete: true
