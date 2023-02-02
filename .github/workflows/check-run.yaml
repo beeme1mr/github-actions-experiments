@@ -22,8 +22,4 @@ jobs:
         message: |
           Hey there and thank you for opening this pull request! 👋🏼
 
-          Details:
-
-          ```
           ${{ github.event.check_run.app.description }}
-          ```
