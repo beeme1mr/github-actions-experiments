@@ -1,0 +1,11 @@
+on:
+  check_run:
+    types: [completed]
+    
+jobs:
+  check_run_test:
+    runs-on: ubuntu-latest
+
+    steps:
+        run: |
+          echo The check-run event fired
