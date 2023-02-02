@@ -20,8 +20,6 @@ jobs:
         header: dco-required
         number: ${{ github.event.check_run.check_suite.pull_requests[0].number }}
         message: |
-          Hey there and thank you for opening this pull request! 👋🏼
-
           This project enforces the [Developer Certificate of Origin](https://developercertificate.org/) (DCO) on Pull Requests. That means all commit messages must contain the `Signed-off-by` line with an email address that matches the commit author.
 
           ${{ github.event.check_run.output.summary }}
