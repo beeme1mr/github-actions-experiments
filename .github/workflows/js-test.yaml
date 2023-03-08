@@ -41,4 +41,11 @@ jobs:
   release:
     needs: check_run_test
     runs-on: ubuntu-latest
+    if: ${{ needs.check_run_test.outputs.should_deploy }}
+    strategy:
+      matrix: 
+        path: ${{ fromJSON(needs.check_run_test.outputs.items_to_deploy) }}
+    steps:
+      - name: Get result
+        run: echo "I should deploy!"
     
