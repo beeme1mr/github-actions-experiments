@@ -1,0 +1,14 @@
+on:
+  repository_dispatch:
+    types: [on_demand_test]
+
+jobs:
+  check_run_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump On Demand Payload
+      env:
+        PAYLOAD: ${{ toJson(github.event.on_demand_test) }}
+      run: |
+        echo "$PAYLOAD"
