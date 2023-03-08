@@ -2,6 +2,9 @@ on:
   repository_dispatch:
     types: [on_demand_test]
 
+env:
+  ITEMS_TO_DEPLOY: '["test", "test3"]'
+
 jobs:
   check_run_test:
     runs-on: ubuntu-latest
@@ -12,3 +15,14 @@ jobs:
         PAYLOAD: ${{ toJson(github.event.client_payload) }}
       run: |
         echo "$PAYLOAD"
+
+    - name: JavaScript Magic
+      uses: actions/github-script@v6
+      id: filter
+      with:
+        script: |
+          const filter = JSON.parse(process.env.ITEMS_TO_DEPLOY);
+          return JSON.parse(github.event.client_payload).filter(i => filter.includes(i));
+          
+    - name: Get result
+      run: echo "${{steps.filter.outputs.result}}"
