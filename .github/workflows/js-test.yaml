@@ -35,8 +35,8 @@ jobs:
     - name: Get result
       run: echo "${{steps.filter.outputs.result}}"
     outputs:
-      should_deploy: ${{steps.filter.outputs.result.shouldDeploy}}
-      items_to_deploy: ${{steps.filter.outputs.result.itemsToDeploy}}
+      should_deploy: ${{ fromJSON(steps.filter.outputs.result.shouldDeploy).shouldDeploy }}
+      items_to_deploy: ${{ fromJSON(steps.filter.outputs.result.itemsToDeploy).itemsToDeploy }}
 
   release:
     needs: check_run_test
