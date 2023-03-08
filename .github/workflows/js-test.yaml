@@ -23,8 +23,8 @@ jobs:
         script: |
           const filter = JSON.parse(process.env.ITEMS_TO_DEPLOY);
           console.log(filter);
-          console.log(context.payload);
-          const items = JSON.parse(github.event.client_payload.items);
+          console.log(context.payload.client_payload.items);
+          const items = JSON.parse(context.payload.client_payload.items);
           console.log(items);
           return items.filter(i => filter.includes(i));
           
