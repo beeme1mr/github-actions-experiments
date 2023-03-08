@@ -22,7 +22,11 @@ jobs:
       with:
         script: |
           const filter = JSON.parse(process.env.ITEMS_TO_DEPLOY);
-          return JSON.parse(github.event.client_payload.items).filter(i => filter.includes(i));
+          console.log(filter);
+          console.log(context.payload);
+          const items = JSON.parse(github.event.client_payload.items);
+          console.log(items);
+          return items.filter(i => filter.includes(i));
           
     - name: Get result
       run: echo "${{steps.filter.outputs.result}}"
