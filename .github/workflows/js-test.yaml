@@ -9,6 +9,6 @@ jobs:
     steps:
     - name: Dump On Demand Payload
       env:
-        PAYLOAD: ${{ toJson(github.event.on_demand_test) }}
+        PAYLOAD: ${{ toJson(github.event.client_payload) }}
       run: |
         echo "$PAYLOAD"
