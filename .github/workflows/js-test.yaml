@@ -26,7 +26,19 @@ jobs:
           // Grab from incoming payload
           const items = context.payload.client_payload.items;
           console.log(items);
-          return items.filter(i => filter.includes(i));
+          itemsToDeploy = items.filter(i => filter.includes(i));
+          return {
+            shouldDeploy: itemsToDeploy.length > 0,
+            itemsToDeploy,
+          };
           
     - name: Get result
       run: echo "${{steps.filter.outputs.result}}"
+    outputs:
+      should_deploy: ${{steps.filter.outputs.result.shouldDeploy}}
+      items_to_deploy: ${{steps.filter.outputs.result.itemsToDeploy}}
+
+  release:
+    needs: check_run_test
+    runs-on: ubuntu-latest
+    
