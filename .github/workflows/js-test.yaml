@@ -16,7 +16,7 @@ jobs:
       run: |
         echo "$PAYLOAD"
 
-    - name: JavaScript Magic
+    - name: JavaScript Items to Deploy
       uses: actions/github-script@v6
       id: filter
       with:
@@ -27,21 +27,30 @@ jobs:
           const items = context.payload.client_payload.items;
           console.log(items);
           itemsToDeploy = items.filter(i => filter.includes(i));
-          return {
-            shouldDeploy: itemsToDeploy.length > 0,
-            itemsToDeploy,
-          };
+          return itemsToDeploy;
+          
+    - name: JavaScript Should Deploy
+      uses: actions/github-script@v6
+      id: deploy
+      env:
+          ITEMS: '${{steps.filter.outputs.result}}'
+      with:
+        script: |
+          const items = JSON.parse(process.env.ITEMS);
+          console.log(items);
+          return items.length > 0;
           
     - name: Get result
       run: echo "${{steps.filter.outputs.result}}"
+    
     outputs:
-      should_deploy: ${{ fromJSON(steps.filter.outputs.result).shouldDeploy }}
-      items_to_deploy: ${{ fromJSON(steps.filter.outputs.result).itemsToDeploy }}
+      should_deploy: ${{ steps.deploy.outputs.result }}
+      items_to_deploy: ${{ steps.filter.outputs.result }}
 
   release:
     needs: check_run_test
     runs-on: ubuntu-latest
-    if: ${{ needs.check_run_test.outputs.should_deploy }}
+    if: ${{ fromJSON(needs.check_run_test.outputs.should_deploy) }}
     strategy:
       matrix: 
         path: ${{ fromJSON(needs.check_run_test.outputs.items_to_deploy) }}
