@@ -4,7 +4,6 @@ on:
     inputs:
       titleText:
         description: "What should be released?"
-        required: true
       environment:
         description: 'Environment to run tests against'
         default: 'dev'
