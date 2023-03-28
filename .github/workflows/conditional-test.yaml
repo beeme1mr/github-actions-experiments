@@ -1,0 +1,39 @@
+name: Test Conditionals
+on:
+  workflow_dispatch:
+    inputs:
+      titleText:
+        description: "What should be released?"
+        required: true
+      environment:
+        description: 'Environment to run tests against'
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+        - dev
+        - hardening
+        - prod
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+    outputs:
+      item_to_release: ${{ inputs.titleText }}
+      
+  publish:
+   name: Publish
+   needs: release
+   runs-on: ubuntu-latest
+   # Testing conditional from previous step
+   if: ${{ github.repository_owner == 'beeme1mr' && needs.release.outputs.item_to_release }}
+   steps:
+    - name: Get result
+      run: echo "Deploying ${{ inputs.titleText }} to ${{ inputs.environment }}"
