@@ -16,8 +16,8 @@ jobs:
               # category1=$(grep -e "Category" -A2 ${{ github.event.issue.body }})
               # category2=grep -v "Category" $category1
               # category3=grep "\S" $category2
-              category3=grep -e "Category" -A2 "${{ github.event.issue.body }}" | grep -v "Category" | grep "\S"
-              echo "category=$category3" >> "$GITHUB_OUTPUT"
+              # category3=grep -e "Category" -A2 "${{ github.event.issue.body }}" | grep -v "Category" | grep "\S"
+              # echo "category=$category3" >> "$GITHUB_OUTPUT"
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           - name: Run auto-assignment script
