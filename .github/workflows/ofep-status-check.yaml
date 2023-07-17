@@ -43,6 +43,6 @@ jobs:
       - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]'), steps.list-added-files.outputs.status) }}
         name: Exit with error
         run: |
-          echo "${{ steps.added-files.outputs.added_files }}"
+          echo "${{ steps.list-added-files.outputs.status }}"
           echo "status is not approved"
           exit 1
