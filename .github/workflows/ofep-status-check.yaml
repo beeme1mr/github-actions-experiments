@@ -32,13 +32,25 @@ jobs:
         id: list-added-files
         if: ${{ steps.added-files.outputs.added_files_count > 0 }}
         run: |
-          pwd
-          ls
+          #!/bin/bash
+
+
           for file in ${{ steps.added-files.outputs.added_files }}; do
-            echo "working directory $(pwd)"
-            echo "$file was added"
-            echo "status=$(grep -e "State" "$file" | tr -d "## State: " | tr -d '"')" >> "$GITHUB_OUTPUT"
+            while IFS= read -r line; do
+              if [[ $line == "## State:"* ]]; then
+                value=${line#*State:}
+                value=${value# } # Remove leading whitespace
+                if [[ "$value" != "REJECTED" && "$value" != "WITHDRAWN" && "$value" != "APPROVED" ]]; then
+                  echo "Unmatched value detected in file: $file"
+                  echo "Detected status: $value"
+                  exit 1
+                fi
+              fi
+            done < "$file"
           done
+
+          echo "All files checked successfully."
+          exit 0
 
       - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]'), steps.list-added-files.outputs.status) }}
         name: Exit with error
