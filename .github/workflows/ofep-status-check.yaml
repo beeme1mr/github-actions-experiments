@@ -14,26 +14,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: ls
       - name: Get added files
         id: added-files
         uses: tj-actions/changed-files@v37
         with: 
           files: |
             **.md
-      - run: ls
-      - if: ${{ steps.added-files.outputs.added_files_count == 0 }}
-        name: No check needed
-        run: |
-          echo "No OFEP proposals were added"
-          exit 0
-        
+
       - name: List all added files
         id: list-added-files
         if: ${{ steps.added-files.outputs.added_files_count > 0 }}
         run: |
           #!/bin/bash
-
 
           for file in ${{ steps.added-files.outputs.added_files }}; do
             while IFS= read -r line; do
@@ -51,10 +43,3 @@ jobs:
 
           echo "All files checked successfully."
           exit 0
-
-      - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]'), steps.list-added-files.outputs.status) }}
-        name: Exit with error
-        run: |
-          echo "${{ steps.list-added-files.outputs.status }}"
-          echo "status is not approved"
-          exit 1
