@@ -2,15 +2,6 @@ name: OFEP Status Check
 
 on:
   pull_request_target:
-    types:
-      - opened
-      - edited
-      - closed
-      - reopened
-      # Makes sure we always add status check for PRs. Useful only if
-      # this action is required to pass before merging. Otherwise, it
-      # can be removed.
-      - synchronize
 
 jobs:
    changed_files:
