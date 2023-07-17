@@ -43,7 +43,7 @@ jobs:
             echo "status=$(grep -e "State" "$file" | tr -d "## State: " | tr -d '"')" >> "$GITHUB_OUTPUT"
           done
 
-      - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]', steps.list-added-files.outputs.status) }}
+      - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]'), steps.list-added-files.outputs.status) }}
         name: Exit with error
         run: |
           echo "status is not approved"
