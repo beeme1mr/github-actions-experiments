@@ -32,7 +32,7 @@ jobs:
         if: ${{ steps.added-files.outputs.added_files_count > 0 }}
         run: |
           pwd
-          ls -l
+          ls
           for file in ${{ steps.added-files.outputs.added_files }}; do
             echo "working directory $(pwd)"
             echo "$file was added"
