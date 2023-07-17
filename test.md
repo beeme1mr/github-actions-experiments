@@ -1,5 +1,5 @@
 ## Test
 
-## State: DRAFTING
+## State: APPROVED
 
 This is a test PR
