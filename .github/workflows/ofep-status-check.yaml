@@ -18,7 +18,8 @@ jobs:
         id: added-files
         uses: tj-actions/changed-files@v37
         with: 
-          files: "**.md"
+          files: |
+            - **.md
           files_ignore: README.md
 
       - name: List all added files
