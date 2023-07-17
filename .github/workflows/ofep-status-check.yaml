@@ -29,14 +29,14 @@ jobs:
         
       - name: List all added files
         id: list-added-files
-        if: ${{ steps.added-files.outputs.added_files_count != 0 }}
+        if: ${{ steps.added-files.outputs.added_files_count > 0 }}
         run: |
           for file in ${{ steps.added-files.outputs.added_files }}; do
             echo "$file was added"
             echo "status=$(grep -e "State" "$file" | tr -d "## State: " | tr -d '"')" >> "$GITHUB_OUTPUT"
           done
 
-      - if: ${{ (steps.added-files.outputs.added_files_count != 0) && (steps.list-added-files.outputs.status != 'REJECTED') && (steps.list-added-files.outputs.status != 'WITHDRAWN') && (steps.list-added-files.outputs.status != 'APPROVED') }}
+      - if: ${{ steps.added-files.outputs.added_files_count > 0 && !contains(fromJSON('["REJECTED", "WITHDRAWN", "APPROVED"]', steps.list-added-files.outputs.status) }}
         name: Exit with error
         run: |
           echo "status is not approved"
