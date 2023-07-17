@@ -18,8 +18,8 @@ jobs:
         id: added-files
         uses: tj-actions/changed-files@v37
         with: 
-          files: |
-            **.md
+          files: "**.md"
+          files_ignore: README.md
 
       - name: List all added files
         id: list-added-files
@@ -35,6 +35,7 @@ jobs:
                 if [[ "$value" != "REJECTED" && "$value" != "WITHDRAWN" && "$value" != "APPROVED" ]]; then
                   echo "Unmatched value detected in file: $file"
                   echo "Detected status: $value"
+                  echo "Please set the status to "REJECTED", "WITHDRAWN", or "APPROVED" before merging.
                   exit 1
                 fi
               fi
