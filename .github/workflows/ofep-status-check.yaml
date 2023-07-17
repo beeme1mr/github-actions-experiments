@@ -38,6 +38,8 @@ jobs:
         id: list-added-files
         if: ${{ steps.added-files.outputs.added_files_count > 0 }}
         run: |
+          pwd
+          ls -l
           for file in ${{ steps.added-files.outputs.added_files }}; do
             echo "$file was added"
             echo "status=$(grep -e "State" "$file" | tr -d "## State: " | tr -d '"')" >> "$GITHUB_OUTPUT"
