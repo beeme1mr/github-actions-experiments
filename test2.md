@@ -1,5 +1,5 @@
 ## Test2
 
-## State: PENDING
+## State: APPROVED
 
 This is a test PR
