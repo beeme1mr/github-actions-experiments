@@ -14,13 +14,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: ls
       - name: Get added files
         id: added-files
         uses: tj-actions/changed-files@v37
         with: 
           files: |
             **.md
-      
+      - run: ls
       - if: ${{ steps.added-files.outputs.added_files_count == 0 }}
         name: No check needed
         run: |
