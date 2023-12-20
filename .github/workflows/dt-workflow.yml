@@ -1,6 +1,7 @@
 name: Dynatrace Workflow
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [on_demand_test]
     inputs:
       titleText:
         description: "What should be released?"
