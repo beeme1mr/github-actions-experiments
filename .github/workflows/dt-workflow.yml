@@ -1,0 +1,26 @@
+name: Dynatrace Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      titleText:
+        description: "What should be released?"
+      environment:
+        description: 'Environment to run tests against'
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+        - dev
+        - hardening
+        - prod
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
