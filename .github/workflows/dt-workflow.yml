@@ -2,18 +2,6 @@ name: Dynatrace Workflow
 on:
   repository_dispatch:
     types: [dt_workflow]
-    inputs:
-      titleText:
-        description: "What should be released?"
-      environment:
-        description: 'Environment to run tests against'
-        default: 'dev'
-        required: true
-        type: choice
-        options:
-        - dev
-        - hardening
-        - prod
 
 jobs:
   debug:
